@@ -1,24 +1,10 @@
-# Programa de Vendas de Leitura online e Download de livros
+# Meu Capítulo
+Plataforma onde qualquer pessoa publica livros em capítulos e vende cada capítulo.
 
-Projeto pessoal
+    npm install
+    cp .env.example .env   # opcional; sem MP_TOKEN o pagamento é simulado
+    npm start   # node ./bin/www -> http://localhost:3000
 
-Link para heroku: 
-
-Aplicação que permite a compra de livros, leitura online e downloads de livros comprados ou gratuitos. Esta aplicação tem como fim treinamento da linguagem PHP, JavaScript, JSON, HTML5, CSS3, SCSS e JQuery.
-
-## Como rodar
-
-### Instalando dependências
-Atualmente o Ecommerce não possui um back-end 
-```
-não possui dependências
-```
-
-### Configurando a Base de Dados
-atualmente não possui base de dados determinada
-```
-não possui BD
-```
-
-### Esta aplicação utiliza: 
-linguagem PHP, JavaScript, JSON, HTML5, CSS3, SCSS e JQuery.
+Fluxo: cadastro → "Minha área" → novo livro → novo capítulo (preço) → leitor compra → capítulo liberado.
+Pagamento real: defina MP_TOKEN (Mercado Pago, credencial de teste) e BASE_URL pública (para o webhook).
+Pendente para produção: banco real (db.js é JSON), split automático autor/plataforma (COMISSAO apenas registra), upload de capa, edição/exclusão.

@@ -1,0 +1,27 @@
+# Estúdio de Escrita — Meu Capítulo
+
+## Arquivos
+- `views/form.ejs`: formulário do livro e novo editor de capítulos.
+- `public/javascript/editor.js`: editor por blocos, reordenação, duplicação, exclusão, pré-visualização, upload/colar imagem e rascunho local.
+- `public/stylesheets/editor.css`: aparência responsiva do estúdio.
+- `lib/render.js`: renderiza os blocos no leitor e mantém compatibilidade com capítulos antigos em texto puro.
+
+## Instalação
+Copie os arquivos para os caminhos correspondentes no projeto.
+
+O `POST /books/:id/chapters` que você já possui pode continuar usando `req.body.text`:
+o editor envia um JSON serializado nesse campo. Não é necessário alterar o SQL de `chapters`,
+pois a coluna `text` já é TEXT.
+
+Substitua o conteúdo de `lib/render.js` pelo arquivo incluído. O `read.ejs` atual já chama
+`texto(c.text)`, então não precisa mudar a chamada.
+
+O editor usa o endpoint existente `POST /upload`, com o campo `imagem`. Ele espera que a rota
+retorne `{ "url": "/uploads/arquivo.ext" }`.
+
+## Importante
+- O rascunho automático é salvo no navegador atual (`localStorage`), não no servidor.
+- O salvamento definitivo acontece quando o autor clica em “Publicar capítulo”.
+- Imagens ficam em `public/uploads`; somente o caminho da imagem é guardado dentro do JSON do capítulo.
+- Capítulos antigos continuam sendo renderizados como texto.
+- A rota de criação de livro com capa permanece separada e não foi incluída neste pacote.

@@ -1,0 +1,7 @@
+<%- include('head') %><div class="row" style="margin-bottom:1.5rem"><h1>Minha área de autor</h1><a class="btn gold" href="/books/new">Novo livro</a></div>
+<% if (!books.length) { %><div class="empty"><p>Você ainda não criou nenhum livro.</p><a class="btn" href="/books/new">Criar meu primeiro livro</a></div><% } %>
+<% books.forEach(b => { %><div class="shelf"><div class="row"><h3><a href="/book/<%= b.id %>"><%= b.title %></a></h3>
+<a class="btn sm gold" href="/books/<%= b.id %>/chapters/new">Novo capítulo</a></div>
+<% if (!b.chapters.length) { %><p class="muted">Sem capítulos. Publique o primeiro.</p><% } %>
+<ul><% b.chapters.forEach(c => { %><li><a href="/read/<%= c.id %>"><%= c.title %></a> <span class="muted">— <%= c.price > 0 ? 'R$ ' + c.price.toFixed(2) : 'grátis' %></span></li><% }) %></ul></div><% }) %>
+<%- include('foot') %>

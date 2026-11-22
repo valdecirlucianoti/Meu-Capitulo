@@ -1,0 +1,145 @@
+
+<%- include('head') %>
+
+<div class="library">
+
+  <section class="library-hero">
+    <div class="hero-content">
+      <span class="hero-label">UM UNIVERSO DE HISTÓRIAS</span>
+      <h1>Uma boa história merece ser <em>descoberta.</em></h1>
+      <p>Explore histórias independentes, conheça novos autores e encontre seu próximo livro favorito.</p>
+      <a href="#catalogo" class="hero-button">Explorar biblioteca <span>→</span></a>
+    </div>
+    <div class="hero-decoration">
+      <div class="hero-book hero-book-one"></div>
+      <div class="hero-book hero-book-two"></div>
+      <div class="hero-book hero-book-three"></div>
+      <span class="hero-star">✦</span>
+    </div>
+  </section>
+
+  <% if (maisLidos.length) { %>
+    <section class="featured-section">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">ESCOLHA DOS LEITORES</span>
+          <h2>Histórias em destaque</h2>
+        </div>
+        <span class="section-note">As mais lidas da comunidade</span>
+      </div>
+
+      <div class="featured-grid">
+        <% maisLidos.slice(0, 3).forEach((b, i) => { %>
+          <a href="/book/<%= b.id %>" class="featured-card">
+            <div class="featured-cover">
+              <%- include('cover', {b}) %>
+              <span class="featured-number">0<%= i + 1 %></span>
+            </div>
+            <div class="featured-info">
+              <span class="book-genre"><%= b.genre %></span>
+              <h3><%= b.title %></h3>
+              <p class="book-author">por <%= b.author %></p>
+              <p class="featured-synopsis"><%= b.synopsis || 'Uma história esperando para ser descoberta.' %></p>
+              <div class="book-stats">
+                <span>◉ <%= b.reads %> leituras</span>
+                <span>♡ <%= b.comments || 0 %> comentários</span>
+              </div>
+            </div>
+          </a>
+        <% }) %>
+      </div>
+    </section>
+  <% } %>
+
+  <section class="catalog-section" id="catalogo">
+    <div class="section-heading catalog-heading">
+      <div>
+        <span class="section-kicker">DESCUBRA SEU PRÓXIMO LIVRO</span>
+        <h2><%= filtrado ? (genero || 'Resultados da busca') : 'Explore a biblioteca' %></h2>
+      </div>
+      <span class="catalog-total"><%= total %> livros publicados</span>
+    </div>
+
+    <div class="library-layout">
+
+      <aside class="genre-sidebar">
+        <h3>Gêneros</h3>
+        <a href="/" class="<%= !genero && !busca ? 'selected' : '' %>">
+          Todos os livros <span><%= total %></span>
+        </a>
+
+        <% nomes.forEach(g => { %>
+          <a href="/?genero=<%= encodeURIComponent(g.n) %>"
+             class="<%= genero === g.n ? 'selected' : '' %> <%= !g.count ? 'disabled' : '' %>">
+            <%= g.n %><span><%= g.count %></span>
+          </a>
+        <% }) %>
+      </aside>
+
+      <div class="catalog-content">
+
+        <% if (!total) { %>
+          <div class="library-empty">
+            <span>✦</span>
+            <h3>A biblioteca está esperando histórias.</h3>
+            <p>Seja o primeiro autor a publicar seu livro!</p>
+            <a href="/register" class="hero-button">Começar a escrever →</a>
+          </div>
+        <% } %>
+
+        <% if (total && filtrado && !prateleiras[0][1].length) { %>
+          <div class="library-empty">
+            <h3>Nenhuma história encontrada.</h3>
+            <p>Tente outro gênero ou termo de busca.</p>
+            <a href="/" class="hero-button">Ver todos os livros</a>
+          </div>
+        <% } %>
+
+        <% prateleiras.forEach(([nome, lista]) => { %>
+          <% if (lista.length) { %>
+            <section class="book-shelf">
+              <% if (!filtrado) { %>
+                <div class="shelf-heading">
+                  <h3><%= nome %></h3>
+                  <a href="/?genero=<%= encodeURIComponent(nome) %>">Ver todos →</a>
+                </div>
+              <% } %>
+
+              <div class="book-grid">
+                <% lista.forEach(b => { %>
+                  <a href="/book/<%= b.id %>" class="book-card">
+
+                    <div class="book-card-cover">
+                      <%- include('cover', {b}) %>
+                      <span class="cover-overlay">Conhecer livro →</span>
+                    </div>
+
+                    <div class="book-card-info">
+                      <span class="book-genre"><%= b.genre %></span>
+                      <h4><%= b.title %></h4>
+                      <p class="book-author">por <%= b.author %></p>
+
+                      <p class="book-description">
+                        <%= b.synopsis || 'Uma história esperando para ser descoberta.' %>
+                      </p>
+
+                      <div class="book-stats">
+                        <span title="Leituras">◉ <%= b.reads %></span>
+                        <span title="Comentários">♡ <%= b.comments || 0 %></span>
+                      </div>
+                    </div>
+
+                  </a>
+                <% }) %>
+              </div>
+            </section>
+          <% } %>
+        <% }) %>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<%- include('foot') %>

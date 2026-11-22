@@ -1,0 +1,11 @@
+<%- include('head') %>
+<section class="bookhead"><%- include('cover', {b: {title: b.title, author}}) %><div>
+<h1><%= b.title %></h1><p class="muted">por <%= author %> · <%= b.genre || 'Outros' %> · <%= chapters.length %> cap. · <%= reads %> leituras</p><p><%= b.synopsis %></p>
+<% if (chapters.length) { %><a class="btn gold" href="/read/<%= chapters[0].id %>">Começar a ler</a><% } %></div></section>
+<h2>Capítulos</h2>
+<% if (!chapters.length) { %><div class="empty">O autor ainda não publicou o primeiro capítulo.</div><% } %>
+<ol class="chapters"><% chapters.forEach(c => { %><li><a href="<%= c.acc === 'pagar' ? '/checkout/' : '/read/' %><%= c.id %>"><b><%= c.title %></b>
+<% if (c.acc === 'ok') { %><span class="tag free"><%= c.price > 0 ? 'Comprado' : 'Grátis' %></span>
+<% } else if (c.acc === 'login') { %><span class="tag">Entre para ler</span>
+<% } else { %><span class="tag">R$ <%= c.price.toFixed(2) %></span><% } %></a></li><% }) %></ol>
+<%- include('foot') %>

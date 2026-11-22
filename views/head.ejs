@@ -1,0 +1,8 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Meu Capítulo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Literata:ital,wght@0,400;0,600;1,400&family=Young+Serif&display=swap" rel="stylesheet">
+<link href="/stylesheets/style.css" rel="stylesheet"></head><body>
+<header class="top"><a class="logo" href="/">Meu Capítulo</a>
+<form class="busca" action="/"><input name="q" placeholder="Buscar livro" aria-label="Buscar livro" value="<%= locals.busca || '' %>"></form>
+<nav><a class="lk" href="/">Vitrine</a><a class="lk" href="/#mais-lidos">Rankings</a>
+<% if (user) { %><a class="btn sm gold" href="/dashboard">Minha área</a><a class="btn sm" href="/logout">Sair</a>
+<% } else { %><a class="btn sm" href="/login">Entrar</a><a class="btn sm gold" href="/register">Publicar</a><% } %></nav></header><main>

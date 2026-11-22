@@ -1,0 +1,132 @@
+<%- include('head') %>
+
+<div class="panel wide editor-page">
+  <% if (kind === 'book') { %>
+    <h2>Novo livro</h2>
+    <% if (typeof msg !== 'undefined' && msg) { %><div class="alert"><%= msg %></div><% } %>
+    <form method="post" action="/books" enctype="multipart/form-data">
+      <label for="title">Título do livro</label>
+      <input id="title" name="title" maxlength="200" required>
+
+      <label for="cover">Capa do livro</label>
+      <input id="cover" type="file" name="capa" accept="image/png,image/jpeg,image/gif,image/webp" required>
+
+      <label for="genre">Gênero</label>
+      <select id="genre" name="genre">
+        <% generos.forEach(g => { %><option value="<%= g %>"><%= g %></option><% }) %>
+      </select>
+
+      <label for="synopsis">Sinopse</label>
+      <textarea id="synopsis" name="synopsis" rows="6" maxlength="3000" required></textarea>
+
+      <button class="btn gold">Criar livro</button>
+    </form>
+  <% } else { %>
+    <link rel="stylesheet" href="/stylesheets/editor.css">
+    <div class="studio-head">
+      <div>
+        <p class="studio-kicker">ESTÚDIO DE ESCRITA</p>
+        <h2>Novo capítulo</h2>
+        <p class="muted">Livro: <strong><%= book.title %></strong></p>
+      </div>
+      <span class="studio-save" id="saveStatus">Rascunho local</span>
+    </div>
+
+    <% if (typeof msg !== 'undefined' && msg) { %><div class="alert"><%= msg %></div><% } %>
+
+    <form method="post" action="/books/<%= book.id %>/chapters" id="chapterForm">
+      <div class="studio-meta">
+        <div>
+          <label for="chapterTitle">Título do capítulo</label>
+          <input id="chapterTitle" name="title" maxlength="200" placeholder="Ex.: Capítulo 1 — O despertar" required>
+        </div>
+        <div>
+          <label for="price">Preço em R$ (0 = grátis)</label>
+          <input id="price" type="number" step="0.01" min="0" name="price" value="0">
+        </div>
+      </div>
+
+      <section class="studio">
+        <div class="studio-toolbar">
+          <div>
+            <strong>Estrutura do capítulo</strong>
+            <small>Monte a narrativa com blocos e reorganize quando quiser.</small>
+          </div>
+          <button type="button" class="studio-quiet" id="previewToggle">Pré-visualizar</button>
+        </div>
+
+        <div class="studio-grid">
+          <aside class="studio-sidebar">
+            <label for="blockType">Tipo de bloco</label>
+            <select id="blockType">
+              <option value="h1">Título principal</option>
+              <option value="h2">Subtítulo</option>
+              <option value="h3">Título menor</option>
+              <option value="p" selected>Texto / parágrafos</option>
+              <option value="ul">Lista com marcadores</option>
+              <option value="ol">Lista numerada</option>
+              <option value="steps">Passo a passo</option>
+              <option value="quote">Citação</option>
+              <option value="note-info">Destaque informativo</option>
+              <option value="note-warn">Atenção</option>
+              <option value="note-ok">Dica / destaque</option>
+              <option value="note-err">Alerta crítico</option>
+              <option value="img">Imagem / ilustração</option>
+              <option value="code">Texto monoespaçado</option>
+              <option value="table">Tabela</option>
+              <option value="link">Botão de link</option>
+              <option value="hr">Divisor de cena</option>
+              <option value="pagebreak">Quebra de página</option>
+            </select>
+            <p class="studio-help" id="blockHelp">Escreva livremente. Uma linha em branco separa parágrafos. Use **negrito**, *itálico* e [texto](https://link).</p>
+
+            <div id="textEditor">
+              <label for="blockContent">Conteúdo do bloco</label>
+              <textarea id="blockContent" rows="9" placeholder="Comece a escrever..."></textarea>
+            </div>
+
+            <div id="imageEditor" hidden>
+              <label for="blockImage">Imagem</label>
+              <input id="blockImage" type="file" accept="image/png,image/jpeg,image/gif,image/webp">
+              <label for="imageCaption">Legenda (opcional)</label>
+              <input id="imageCaption" placeholder="Legenda da ilustração">
+              <small class="studio-help" id="imageStatus">PNG, JPG, GIF ou WEBP. Máximo de 5 MB.</small>
+            </div>
+
+            <div class="studio-editor-actions">
+              <button type="button" class="btn gold" id="addBlock">+ Adicionar bloco</button>
+              <button type="button" class="studio-quiet" id="cancelEdit" hidden>Cancelar edição</button>
+            </div>
+          </aside>
+
+          <div class="studio-main">
+            <div class="blocks-heading">
+              <span>CONTEÚDO DO CAPÍTULO</span>
+              <span id="blockCount">0 blocos</span>
+            </div>
+            <div id="blocks" class="blocks-list">
+              <div class="blocks-empty" id="emptyState">
+                <strong>Sua história começa aqui.</strong>
+                <p>Escolha um tipo de bloco ao lado, escreva e clique em “Adicionar bloco”. Você pode misturar texto, imagens, citações e outros elementos.</p>
+              </div>
+            </div>
+            <div id="preview" class="chapter-preview" hidden></div>
+          </div>
+        </div>
+      </section>
+
+      <textarea id="text" name="text" hidden></textarea>
+      <div class="studio-footer">
+        <span class="muted">Você pode voltar e continuar editando antes de publicar.</span>
+        <button class="btn gold" type="submit">Publicar capítulo</button>
+      </div>
+    </form>
+
+    <script>
+      window.MEU_CAPITULO_EDITOR = { bookId: <%- JSON.stringify(String(book.id)) %> };
+    </script>
+    <script src="/javascripts/editor.js" defer></script>
+  <% } %>
+</div>
+
+<%- include('foot') %>

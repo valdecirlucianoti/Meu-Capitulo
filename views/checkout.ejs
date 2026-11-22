@@ -1,0 +1,4 @@
+<%- include('head') %><div class="panel"><h2>Finalizar compra</h2><p class="muted"><%= b.title %></p><h3><%= c.title %></h3>
+<div class="price">R$ <%= c.price.toFixed(2) %></div>
+<% if (modoTeste) { %><div class="alert">Modo teste: o pagamento é simulado. Defina MP_TOKEN para usar o Mercado Pago.</div><% } %>
+<form method="post"><button class="btn gold block"><%= modoTeste ? 'Simular pagamento' : 'Pagar com Pix ou cartão' %></button></form></div><%- include('foot') %>

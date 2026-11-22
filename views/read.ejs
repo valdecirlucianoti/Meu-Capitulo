@@ -1,0 +1,10 @@
+<%- include('head') %>
+<div id="prog"></div>
+<div class="toolbar"><a href="/book/<%= b.id %>">&larr; <%= b.title %></a><span class="muted">Capítulo <%= num %> de <%= total %></span>
+<span class="ctl"><button data-a="menos" aria-label="Diminuir letra">A-</button><button data-a="mais" aria-label="Aumentar letra">A+</button><button data-a="tema">Tema</button></span></div>
+<article class="sheet"><p class="kicker muted">Capítulo <%= num %></p><h1><%= c.title %></h1>
+<div class="prose"><%- texto(c.text) %></div>
+<div class="pager"><% if (prev) { %><a class="btn" href="/read/<%= prev %>">Anterior</a><% } else { %><span></span><% } %>
+<% if (next) { %><a class="btn gold" href="/read/<%= next %>">Próximo capítulo</a><% } else { %><span class="muted">Fim dos capítulos publicados. Volte quando o autor lançar o próximo.</span><% } %></div></article>
+<script src="/javascripts/reader.js"></script>
+<%- include('foot') %>

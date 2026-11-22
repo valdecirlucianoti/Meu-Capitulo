@@ -1,0 +1,7 @@
+<%- include('head') %>
+<article class="sheet gate"><p class="kicker muted"><%= b.title %></p><h1>Você leu os <%= FREE_LIMIT %> primeiros capítulos.</h1>
+<p>Entre para continuar com <b><%= c.title %></b> e seguir a história. É grátis e leva um minuto.</p>
+<div class="row"><a class="btn gold" href="/login">Entrar</a><a class="btn" href="/register">Criar conta</a></div>
+<% if (outros.length) { %><h2 style="margin-top:2.5rem">Ou leia outro livro agora</h2>
+<div class="grid"><% outros.forEach(b => { %><a class="item" href="/book/<%= b.id %>"><%- include('cover', {b}) %><h3><%= b.title %></h3><p class="muted"><%= b.author %></p></a><% }) %></div><% } %></article>
+<%- include('foot') %>
