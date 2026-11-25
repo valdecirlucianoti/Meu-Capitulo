@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www",
+    "seed": "node lib/seed.js",
+    "seed:limpar": "nodemon lib/seed.js --limpar"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -13,6 +15,7 @@
     "express-session": "^1.18.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.14",
     "pg": "^8.23.1"
   }
 }
