@@ -1,1 +1,5 @@
+<% if (b.cover_url) { %>
+<div class="cover has-img"><img src="<%= b.cover_url %>" alt="Capa de <%= b.title %>" loading="lazy"></div>
+<% } else { %>
 <div class="cover" style="--h:<%= hue(b.title) %>"><span><%= b.title %></span><small><%= b.author || '' %></small></div>
+<% } %>

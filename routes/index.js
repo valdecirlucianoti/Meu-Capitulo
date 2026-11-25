@@ -1,4 +1,3 @@
-
 const router = require('express').Router();
 
 const { query } = require('../db');
@@ -23,6 +22,7 @@ router.get('/', async (req, res, next) => {
         b.synopsis,
         b.genre,
         b.reads,
+        b.cover_url,
         u.name AS author,
         COUNT(DISTINCT c.id)::int AS n,
         COUNT(DISTINCT cm.id)::int AS comments
@@ -153,6 +153,7 @@ router.get('/read/:cid', async (req, res, next) => {
           b.synopsis,
           b.genre,
           b.reads,
+          b.cover_url,
           u.name AS author
         FROM books b
         LEFT JOIN users u ON u.id = b.author_id
